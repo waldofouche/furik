@@ -5,7 +5,6 @@ module Furik
   class Cli < Thor
     desc 'pulls', 'show pull requests'
     method_option :gh, type: :boolean, aliases: '-g', default: true
-    method_option :ghe, type: :boolean, aliases: '-l'
     method_option :start_date, type: :string, aliases: '-s'
     method_option :end_date, type: :string, aliases: '-e'
     def pulls
@@ -16,7 +15,7 @@ module Furik
       puts '-'
       puts ''
 
-      Furik.pull_requests(gh: options[:gh], ghe: options[:ghe]) do |repo, issues|
+      Furik.pull_requests(gh: options[:gh]) do |repo, issues|
         if issues && !issues.empty?
           string_issues = issues.each.with_object('') do |issue, memo|
             date = issue.created_at.localtime.to_date
@@ -41,7 +40,6 @@ module Furik
 
     desc 'activity', 'show activity'
     method_option :gh, type: :boolean, aliases: '-g', default: true
-    method_option :ghe, type: :boolean, aliases: '-l'
     method_option :since, type: :numeric, aliases: '-d', default: 0
     method_option :from, type: :string, aliases: '-f', default: Date.today.to_s
     method_option :to, type: :string, aliases: '-t', default: Date.today.to_s
@@ -62,7 +60,7 @@ module Furik
       puts '-'
       puts ''
 
-      Furik.events_with_grouping(gh: options[:gh], ghe: options[:ghe], from: from, to: to) do |repo, events|
+      Furik.events_with_grouping(gh: options[:gh], from: from, to: to) do |repo, events|
         puts "### #{repo}"
         puts ''
 
