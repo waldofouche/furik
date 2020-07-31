@@ -8,12 +8,4 @@ class FurikTest < Minitest::Test
   def test_gh_client_returns_octokit_client
     assert_equal Furik.gh_client.class, Octokit::Client
   end
-
-  def test_events_with_grouping_empty_array
-    assert_equal Furik.events_with_grouping(gh: false), []
-  end
-
-  def test_pull_requests_returns_empty_array
-    assert_equal Furik.pull_requests(gh: false), []
-  end
 end
