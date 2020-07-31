@@ -38,26 +38,21 @@ Today's Activities
 (snip)
 ```
 
-If you want to show GitHub and GitHub Enterprise activities, You need to add `-l` option to `furik` command.
+furik supports to store authentication via NetRC.
 
-    $ furik activity -l
-
-furik supports to store authentication via Pit. You are asked GitHub (and GitHub Enterprise) token from furik.
-
-Pit sotred your token to `~/.pit/default.yaml` by default. You can confirm or modify this yaml.
+Stored to `~/.netrc` by default.
 
 ```sh
-% cat ~/.pit/default.yaml
+% cat ~/.netrc
 ---
-github.com:
-  access_token: your_token
-your.github-enterprise.host:
-  access_token: your_enterprise_token
-furik:
-  github_enterprise_host: your.github-enterpise.host
-```
+machine github.com
+login your_login
+password your_token
 
-NOTE: `your.github-enterprise.host` should be replaced with your true GH:E hostname(both yaml's key and value).
+machine api.github.com
+login your_login
+password your_token
+```
 
 ## Development
 

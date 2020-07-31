@@ -4,14 +4,6 @@ require 'furik'
 require 'minitest/autorun'
 require 'webmock/minitest'
 
-module Furik::Configurable
-  class << self
-    def token_by_pit(host = 'github.com')
-      'x' * 40
-    end
-  end
-end
-
 ENV['GITHUB_ENTERPRISE_HOST'] = 'your.domain.com'
 
 def fixture_path
