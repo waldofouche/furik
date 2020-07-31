@@ -38,15 +38,20 @@ Today's Activities
 (snip)
 ```
 
-furik supports to store authentication via Pit. You are asked GitHub (and GitHub Enterprise) token from furik.
+furik supports to store authentication via NetRC.
 
-Pit sotred your token to `~/.pit/default.yaml` by default. You can confirm or modify this yaml.
+Stored to `~/.netrc` by default.
 
 ```sh
-% cat ~/.pit/default.yaml
+% cat ~/.netrc
 ---
-github.com:
-  access_token: your_token
+machine github.com
+login your_login
+password your_token
+
+machine api.github.com
+login your_login
+password your_token
 ```
 
 ## Development

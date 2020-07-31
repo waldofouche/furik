@@ -1,6 +1,5 @@
 require 'octokit'
 require 'furik/core_ext/string'
-require 'furik/configurable'
 require 'furik/pull_requests'
 require 'furik/events'
 require "furik/version"
@@ -8,7 +7,7 @@ require "furik/version"
 module Furik
   class << self
     def gh_client
-      Octokit::Client.new Configurable.github_octokit_options
+      Octokit::Client.new(auto_paginate: true, per_page: 100, netrc: true)
     end
 
     def events_with_grouping(gh: true, from: nil, to: nil, &block)
