@@ -95,6 +95,19 @@ module Furik
           puts "- [#{type}](#{link}): #{title}"
         end
 
+        Furik.reviews_by_repo(repo: repo, from: from, to: to) do |reviews|
+          reviews.each_with_object({ keys: [] }) do |review, memo|
+            title = "#{review.body.plain.cut} (#{review.state})"
+            link = review.html_url
+            key = "review-#{link}"
+
+            next if memo[:keys].include?(key)
+            memo[:keys] << key
+
+            puts "- [review](#{link}): #{title}"
+          end
+        end
+
         puts ''
       end
     end
