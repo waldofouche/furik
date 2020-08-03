@@ -73,7 +73,7 @@ module Furik
             payload.body.plain.cut
           when 'IssuesEvent'
             type = "#{event.payload.action}_#{type}"
-            payload.title.plain.cut
+            payload.title.plain
           when 'PullRequestReviewCommentEvent'
             type = 'comment'
             if event.payload.pull_request.respond_to?(:title)
@@ -82,7 +82,7 @@ module Furik
               payload.body.plain.cut
             end
           else
-            payload.title.plain.cut
+            payload.title.plain
           end
 
           link = payload.html_url
