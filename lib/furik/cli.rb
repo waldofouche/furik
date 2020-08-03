@@ -52,14 +52,8 @@ module Furik
       since = options[:since]
 
       diff = (to - from).to_i
-      diff.zero? ? from -= since : since = diff
-
-      period = case since
-      when 999 then 'All'
-      when 0 then "Today's"
-      else "#{since + 1}days"
-      end
-      puts "#{period} Activities"
+      from -= since if diff.zero?
+      puts "GitHub Activities"
       puts '-'
       puts ''
 
@@ -74,7 +68,7 @@ module Furik
 
           title = case event.type
           when 'IssueCommentEvent'
-            "#{payload.body.plain.cut} (#{event.payload.issue.title.cut(30)})"
+            "#{payload.body.plain.cut} (#{event.payload.issue.title})"
           when 'CommitCommentEvent'
             payload.body.plain.cut
           when 'IssuesEvent'
@@ -83,7 +77,7 @@ module Furik
           when 'PullRequestReviewCommentEvent'
             type = 'comment'
             if event.payload.pull_request.respond_to?(:title)
-              "#{payload.body.plain.cut} (#{event.payload.pull_request.title.cut(30)})"
+              "#{payload.body.plain.cut} (#{event.payload.pull_request.title})"
             else
               payload.body.plain.cut
             end
@@ -102,7 +96,7 @@ module Furik
 
         Furik.reviews_by_repo(repo: repo, from: from, to: to) do |pulls|
           pulls.each do |pr_title, reviews|
-            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title.cut(30)} #{r.state}" }
+            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title} #{r.state}" }
           end
         end
 
