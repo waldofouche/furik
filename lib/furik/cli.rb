@@ -1,4 +1,4 @@
-require "furik"
+require_relative '../furik.rb'
 require 'thor'
 
 module Furik
@@ -47,15 +47,8 @@ module Furik
       since = options[:since]
 
       diff = (to - from).to_i
-      diff.zero? ? from -= since : since = diff
-
-      period = case since
-      when 999 then 'All'
-      when 0 then "Today's"
-      else "#{since + 1}days"
-      end
-      puts "#{period} Activities"
-      puts '-'
+      from -= since if diff.zero?
+      puts "## GitHub Activities"
       puts ''
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
@@ -69,21 +62,21 @@ module Furik
 
           title = case event.type
           when 'IssueCommentEvent'
-            "#{payload.body.plain.cut} (#{event.payload.issue.title.cut(30)})"
+            "#{payload.body.plain.cut} (#{event.payload.issue.title})"
           when 'CommitCommentEvent'
             payload.body.plain.cut
           when 'IssuesEvent'
             type = "#{event.payload.action}_#{type}"
-            payload.title.plain.cut
+            payload.title.plain
           when 'PullRequestReviewCommentEvent'
             type = 'comment'
             if event.payload.pull_request.respond_to?(:title)
-              "#{payload.body.plain.cut} (#{event.payload.pull_request.title.cut(30)})"
+              "#{payload.body.plain.cut} (#{event.payload.pull_request.title})"
             else
               payload.body.plain.cut
             end
           else
-            payload.title.plain.cut
+            payload.title.plain
           end
 
           link = payload.html_url
@@ -93,6 +86,12 @@ module Furik
           memo[:keys] << key
 
           puts "- [#{type}](#{link}): #{title}"
+        end
+
+        Furik.reviews_by_repo(repo: repo, from: from, to: to) do |pulls|
+          pulls.each do |pr_title, reviews|
+            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title} #{r.state}" }
+          end
         end
 
         puts ''
