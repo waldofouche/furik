@@ -2,17 +2,14 @@
 
 Furik is summary generator for your GitHub activities.
 
-[![ruby gem](https://img.shields.io/gem/v/furik.svg?style=flat-square)][gem]
-[![Travis](https://img.shields.io/travis/pepabo/furik.svg?style=flat-square)][travis]
-
-[gem]: https://rubygems.org/gems/furik
-[travis]: https://travis-ci.org/pepabo/furik
+This has been forked from https://github.com/pepabo/furik and is stripped down for my specific use case.
 
 ## Installation
 
 Install it yourself as:
 
-    $ gem install furik
+    $ gem build furik.gemspec
+    $ gem install --local GENERATED_GEM
 
 ## Usage
 
@@ -24,8 +21,7 @@ Output example is here:
 
 ```
 % furik activity
-Today's Activities
--
+## GitHub Activities
 
 ### ruby/rubyspec
 
@@ -60,7 +56,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/pepabo/furik.
+Bug reports and pull requests are welcome on GitHub at https://github.com/chrisjones120/furik.
 
 ## LICENSE
 
