@@ -53,8 +53,7 @@ module Furik
 
       diff = (to - from).to_i
       from -= since if diff.zero?
-      puts "GitHub Activities"
-      puts '-'
+      puts "## GitHub Activities"
       puts ''
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
