@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "furik"
+require_relative '../furik.rb'
 require 'thor'
 
 module Furik

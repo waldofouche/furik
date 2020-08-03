@@ -1,9 +1,9 @@
 require 'octokit'
-require 'furik/core_ext/string'
-require 'furik/pull_requests'
-require 'furik/reviews'
-require 'furik/events'
-require "furik/version"
+require_relative 'furik/core_ext/string.rb'
+require_relative 'furik/pull_requests.rb'
+require_relative 'furik/reviews.rb'
+require_relative 'furik/events.rb'
+require_relative 'furik/version.rb'
 
 module Furik
   class << self
