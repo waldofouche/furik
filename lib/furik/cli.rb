@@ -1,13 +1,8 @@
-#!/usr/bin/env ruby
 require_relative '../furik.rb'
 require 'thor'
 
 module Furik
   class Cli < Thor
-    def self.exit_on_failure?
-      true
-    end
-
     desc 'pulls', 'show pull requests'
     method_option :start_date, type: :string, aliases: '-s'
     method_option :end_date, type: :string, aliases: '-e'
@@ -104,5 +99,3 @@ module Furik
     end
   end
 end
-
-Furik::Cli.start

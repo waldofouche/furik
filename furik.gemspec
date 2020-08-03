@@ -18,11 +18,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'octokit'
-  spec.add_dependency 'netrc'
-  spec.add_dependency 'thor'
+  spec.add_dependency 'octokit', '~> 4.18.0'
+  spec.add_dependency 'netrc', '~> 0.11.0'
+  spec.add_dependency 'thor', '~> 1.0.1'
 
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'bundler', '~> 2.1.4'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'minitest', '~> 5.14'
 end
