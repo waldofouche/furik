@@ -18,19 +18,29 @@ module Furik
     end
 
     def reviews_by_repo(repo_name, from, to, &block)
-      reviews = @client.pulls(repo_name).flat_map do |pr|
-        @client.pull_request_reviews(repo_name, pr.number)
+      pulls_with_reviews = pull_requests(repo_name, from).each.with_object({}) do |pr, reviews|
+        gh_reviews = @client.pull_request_reviews(repo_name, pr.number)
+        if gh_reviews.is_a? Array
+          gh_reviews = gh_reviews.select do |review|
+            submitted_at = review.submitted_at.localtime.to_date
+            review.user.login == @login && from <= submitted_at && submitted_at <= to
+          end
+
+          reviews[pr.title] = gh_reviews if gh_reviews.count > 0
+        end
         request_manager
       end
 
-      reviews.select do |review|
-        submitted_at = review.submitted_at.localtime.to_date
-        review.user.login == @login && from <= submitted_at && submitted_at <= to
-      end
+      block.call(pulls_with_reviews) if block
 
-      block.call(reviews) if block
+      pulls_with_reviews
+    end
 
-      reviews
+    private
+
+    def pull_requests(repo_name, from)
+      opts = { filter: 'all', state: 'all', sort: 'updated', since: from }
+      @client.issues(repo_name, **opts).select(&:pull_request)
     end
   end
 end
