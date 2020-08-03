@@ -1,6 +1,7 @@
 require 'octokit'
 require 'furik/core_ext/string'
 require 'furik/pull_requests'
+require 'furik/reviews'
 require 'furik/events'
 require "furik/version"
 
@@ -17,6 +18,10 @@ module Furik
       events.concat gh_events if gh_events.is_a?(Array)
 
       events
+    end
+
+    def reviews_by_repo(repo:, from: nil, to: nil, &block)
+      Reviews.new(gh_client).reviews_by_repo(repo, from, to, &block)
     end
 
     def pull_requests(&block)
