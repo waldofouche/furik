@@ -1,8 +1,13 @@
+#!/usr/bin/env ruby
 require "furik"
 require 'thor'
 
 module Furik
   class Cli < Thor
+    def self.exit_on_failure?
+      true
+    end
+
     desc 'pulls', 'show pull requests'
     method_option :start_date, type: :string, aliases: '-s'
     method_option :end_date, type: :string, aliases: '-e'
@@ -95,16 +100,9 @@ module Furik
           puts "- [#{type}](#{link}): #{title}"
         end
 
-        Furik.reviews_by_repo(repo: repo, from: from, to: to) do |reviews|
-          reviews.each_with_object({ keys: [] }) do |review, memo|
-            title = "#{review.body.plain.cut} (#{review.state})"
-            link = review.html_url
-            key = "review-#{link}"
-
-            next if memo[:keys].include?(key)
-            memo[:keys] << key
-
-            puts "- [review](#{link}): #{title}"
+        Furik.reviews_by_repo(repo: repo, from: from, to: to) do |pulls|
+          pulls.each do |pr_title, reviews|
+            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title.cut(30)} #{r.state}" }
           end
         end
 
@@ -113,3 +111,5 @@ module Furik
     end
   end
 end
+
+Furik::Cli.start
