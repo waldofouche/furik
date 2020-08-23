@@ -59,7 +59,7 @@ module Furik
 
         Furik.reviews_by_repo(repo: repo, from: from, to: to) do |pulls|
           pulls.each do |pr_title, reviews|
-            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title} #{r.state}" }
+            reviews.each { |r| puts "- [review](#{r.html_url}): #{pr_title} - #{r.state.downcase.gsub('_', ' ')}" }
           end
         end
 

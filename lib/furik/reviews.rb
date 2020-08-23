@@ -4,6 +4,8 @@ require 'octokit'
 
 module Furik
   class Reviews
+    STATES = %w[APPROVED CHANGES_REQUESTED].freeze
+
     def initialize(client)
       @client = client
       @login = client.login
@@ -41,7 +43,7 @@ module Furik
 
       reviews.select do |review|
         submitted_at = review.submitted_at.localtime.to_date
-        review.user.login == @login && from <= submitted_at && submitted_at <= to
+        review.user.login == @login && STATES.include?(review.state) && from <= submitted_at && submitted_at <= to
       end
     end
   end
