@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../furik.rb'
 require 'thor'
 
@@ -14,7 +16,7 @@ module Furik
 
       diff = (to - from).to_i
       from -= since if diff.zero?
-      puts "## GitHub Activities"
+      puts '## GitHub Activities'
       puts ''
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
@@ -27,28 +29,29 @@ module Furik
           type = payload_type.dup
 
           title = case event.type
-          when 'IssueCommentEvent'
-            "#{payload.body.plain.cut} (#{event.payload.issue.title})"
-          when 'CommitCommentEvent'
-            payload.body.plain.cut
-          when 'IssuesEvent'
-            type = "#{event.payload.action}_#{type}"
-            payload.title.plain
-          when 'PullRequestReviewCommentEvent'
-            type = 'comment'
-            if event.payload.pull_request.respond_to?(:title)
-              "#{payload.body.plain.cut} (#{event.payload.pull_request.title})"
-            else
-              payload.body.plain.cut
-            end
-          else
-            payload.title.plain
+                  when 'IssueCommentEvent'
+                    "#{payload.body.plain.cut} (#{event.payload.issue.title})"
+                  when 'CommitCommentEvent'
+                    payload.body.plain.cut
+                  when 'IssuesEvent'
+                    type = "#{event.payload.action}_#{type}"
+                    payload.title.plain
+                  when 'PullRequestReviewCommentEvent'
+                    type = 'comment'
+                    if event.payload.pull_request.respond_to?(:title)
+                      "#{payload.body.plain.cut} (#{event.payload.pull_request.title})"
+                    else
+                      payload.body.plain.cut
+                    end
+                  else
+                    payload.title.plain
           end
 
           link = payload.html_url
           key = "#{type}-#{link}"
 
           next if memo[:keys].include?(key)
+
           memo[:keys] << key
 
           puts "- [#{type}](#{link}): #{title}"

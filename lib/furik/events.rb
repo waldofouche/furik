@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Furik
   class Events
     def initialize(client)
@@ -6,26 +8,31 @@ module Furik
     end
 
     def events_with_grouping(from, to, &block)
-      @client.user_events(@login).each.with_object({}) { |event, memo|
-        if event && aggressives.include?(event.type)
-          if from <= event.created_at.localtime.to_date && event.created_at.localtime.to_date <= to
-            memo[event.repo.name] ||= []
-            memo[event.repo.name] << event
-          end
-        end
-      }.each do |repo, events|
-        block.call(repo, events) if block
+      events_by_repo = @client.user_events(@login).each.with_object({}) do |event, events|
+        next unless valid_event?(event, from, to)
+
+        events[event.repo.name] ||= []
+        events[event.repo.name] << event
       end
+
+      events_by_repo.each { |repo, events| block&.call(repo, events) }
     end
 
-    def aggressives
-      %w(
+    private
+
+    def valid_event?(event, from, to)
+      event && types.include?(event.type) &&
+        from <= event.created_at.localtime.to_date && event.created_at.localtime.to_date <= to
+    end
+
+    def types
+      %w[
         IssuesEvent
         PullRequestEvent
         PullRequestReviewCommentEvent
         IssueCommentEvent
         CommitCommentEvent
-      )
+      ]
     end
   end
 end
