@@ -30,6 +30,7 @@ module Furik
         IssuesEvent
         PullRequestEvent
         PullRequestReviewCommentEvent
+        PullRequestReviewEvent
         IssueCommentEvent
         CommitCommentEvent
       ]

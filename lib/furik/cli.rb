@@ -24,7 +24,7 @@ module Furik
         puts ''
 
         events.sort_by(&:type).reverse.each_with_object({ keys: [] }) do |event, memo|
-          payload_type = event.type.gsub('Event', '').gsub(/.*Comment/, 'Comment').gsub('Issues', 'Issue').underscore
+          payload_type = Furik.payload_type(event.type)
           payload = event.payload.send(:"#{payload_type}")
           type = payload_type.dup
 
@@ -43,9 +43,12 @@ module Furik
                     else
                       payload.body.plain.cut
                     end
+                  when 'PullRequestReviewEvent'
+                    type = 'review'
+                    "#{event.payload.pull_request.title} (#{payload.state})"
                   else
                     payload.title.plain
-          end
+                  end
 
           link = payload.html_url
           key = "#{type}-#{link}"

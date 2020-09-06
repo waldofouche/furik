@@ -19,6 +19,11 @@ module Furik
       events
     end
 
+    def payload_type(event_type)
+      event_type.gsub('Event', '').gsub(/.*Comment/, 'Comment').gsub('Issues', 'Issue').gsub(/.*Review/, 'Review')
+                .underscore
+    end
+
     def reviews_by_repo(repo:, from: nil, to: nil, &block)
       Reviews.new(gh_client).reviews_by_repo(repo, from, to, &block)
     end
