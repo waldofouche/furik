@@ -1,6 +1,5 @@
 require 'octokit'
 require_relative 'furik/core_ext/string.rb'
-require_relative 'furik/reviews.rb'
 require_relative 'furik/events.rb'
 require_relative 'furik/version.rb'
 
@@ -22,10 +21,6 @@ module Furik
     def payload_type(event_type)
       event_type.gsub('Event', '').gsub(/.*Comment/, 'Comment').gsub('Issues', 'Issue').gsub(/.*Review/, 'Review')
                 .underscore
-    end
-
-    def reviews_by_repo(repo:, from: nil, to: nil, &block)
-      Reviews.new(gh_client).reviews_by_repo(repo, from, to, &block)
     end
   end
 end
