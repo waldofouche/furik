@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'octokit'
 require_relative 'furik/core_ext/string.rb'
 require_relative 'furik/events.rb'
@@ -16,11 +18,6 @@ module Furik
       events.concat gh_events if gh_events.is_a?(Array)
 
       events
-    end
-
-    def payload_type(event_type)
-      event_type.gsub('Event', '').gsub(/.*Comment/, 'Comment').gsub('Issues', 'Issue').gsub(/.*Review/, 'Review')
-                .underscore
     end
   end
 end
