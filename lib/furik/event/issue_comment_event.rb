@@ -7,8 +7,8 @@ module Furik
         :comment
       end
 
-      def title
-        "#{payload.body.plain.cut} (#{event.payload.issue.title})"
+      def summarize
+        "- [##{event.payload.issue.number}](#{payload.html_url}): #{payload.body.plain.cut}"
       end
     end
   end

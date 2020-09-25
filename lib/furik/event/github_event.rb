@@ -11,7 +11,7 @@ module Furik
       end
 
       def type
-        payload_type.to_s
+        payload_type.to_s.gsub('_', ' ').capitalize
       end
 
       def key
@@ -19,7 +19,7 @@ module Furik
       end
 
       def summarize
-        "- [#{type}](#{payload.html_url}): #{title}"
+        "- [##{payload.number}](#{payload.html_url}): #{title} "
       end
 
       def title

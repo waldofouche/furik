@@ -10,6 +10,10 @@ module Furik
       def title
         "#{event.payload.pull_request.title} (#{payload.state})"
       end
+
+      def summarize
+        "- [##{event.payload.pull_request.number}](#{payload.html_url}): #{title}"
+      end
     end
   end
 end

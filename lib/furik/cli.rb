@@ -21,12 +21,16 @@ module Furik
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
         puts "### #{repo}"
-        puts ''
+        events.sort_by(&:type).each_with_object({ keys: [], recent_type: nil }) do |event, processed|
+          next if processed[:keys].include?(event.key)
 
-        events.sort_by(&:type).reverse.each_with_object({ keys: [] }) do |event, memo|
-          next if memo[:keys].include?(event.key)
-
-          memo[:keys] << event.key
+          processed[:keys] << event.key
+          if event.type != processed[:recent_type]
+            puts ''
+            puts "#### #{event.type}"
+            puts ''
+            processed[:recent_type] = event.type
+          end
           puts event.summarize
         end
         puts ''
