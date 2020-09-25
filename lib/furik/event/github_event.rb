@@ -11,7 +11,7 @@ module Furik
       end
 
       def type
-        payload_type.to_s
+        payload_type.to_s.gsub('_', ' ').capitalize
       end
 
       def key

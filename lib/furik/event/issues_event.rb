@@ -8,7 +8,7 @@ module Furik
       end
 
       def type
-        "#{event.payload.action}_#{payload_type}"
+        "#{event.payload.action} #{payload_type}".capitalize
       end
     end
   end
