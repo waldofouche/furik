@@ -19,7 +19,7 @@ module Furik
       end
 
       def summarize
-        "- [#{type}](#{payload.html_url}): #{title}"
+        "- [##{payload.number}](#{payload.html_url}): #{title} "
       end
 
       def title
