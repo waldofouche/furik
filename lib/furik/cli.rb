@@ -26,6 +26,7 @@ module Furik
 
           processed[:keys] << event.key
           if event.type != processed[:recent_type]
+            puts ''
             puts event.type
             processed[:recent_type] = event.type
           end
