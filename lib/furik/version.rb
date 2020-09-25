@@ -1,3 +1,3 @@
 module Furik
-  VERSION = '1.3.0'.freeze
+  VERSION = '1.4.0'.freeze
 end
