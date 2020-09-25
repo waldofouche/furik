@@ -19,10 +19,5 @@ module Furik
 
       events
     end
-
-    def payload_type(event_type)
-      event_type.gsub('Event', '').gsub(/.*Comment/, 'Comment').gsub('Issues', 'Issue').gsub(/.*Review/, 'Review')
-                .underscore
-    end
   end
 end

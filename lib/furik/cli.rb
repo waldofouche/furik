@@ -24,40 +24,10 @@ module Furik
         puts ''
 
         events.sort_by(&:type).reverse.each_with_object({ keys: [] }) do |event, memo|
-          payload_type = Furik.payload_type(event.type)
-          payload = event.payload.send(:"#{payload_type}")
-          type = payload_type.dup
+          next if memo[:keys].include?(event.key)
 
-          title = case event.type
-                  when 'IssueCommentEvent'
-                    "#{payload.body.plain.cut} (#{event.payload.issue.title})"
-                  when 'CommitCommentEvent'
-                    payload.body.plain.cut
-                  when 'IssuesEvent'
-                    type = "#{event.payload.action}_#{type}"
-                    payload.title.plain
-                  when 'PullRequestReviewCommentEvent'
-                    type = 'comment'
-                    if event.payload.pull_request.respond_to?(:title)
-                      "#{payload.body.plain.cut} (#{event.payload.pull_request.title})"
-                    else
-                      payload.body.plain.cut
-                    end
-                  when 'PullRequestReviewEvent'
-                    type = 'review'
-                    "#{event.payload.pull_request.title} (#{payload.state})"
-                  else
-                    payload.title.plain
-                  end
-
-          link = payload.html_url
-          key = "#{type}-#{link}"
-
-          next if memo[:keys].include?(key)
-
-          memo[:keys] << key
-
-          puts "- [#{type}](#{link}): #{title}"
+          memo[:keys] << event.key
+          puts event.summarize
         end
         puts ''
       end
