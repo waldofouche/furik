@@ -7,11 +7,11 @@ module Furik
 
       def initialize(event)
         @event = event
-        @payload = event.payload.send(PAYLOAD_TYPE)
+        @payload = event.payload.send(payload_type)
       end
 
       def type
-        PAYLOAD_TYPE.to_s
+        payload_type.to_s
       end
 
       def key
@@ -23,7 +23,7 @@ module Furik
       end
 
       def title
-        event.payload.action
+        payload.title.plain
       end
     end
   end

@@ -3,7 +3,9 @@
 module Furik
   module Event
     class PullRequestReviewEvent < GithubEvent
-      PAYLOAD_TYPE = :review
+      def payload_type
+        :review
+      end
 
       def title
         "#{event.payload.pull_request.title} (#{payload.state})"

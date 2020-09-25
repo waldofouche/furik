@@ -3,7 +3,9 @@
 module Furik
   module Event
     class IssueCommentEvent < GithubEvent
-      PAYLOAD_TYPE = :comment
+      def payload_type
+        :comment
+      end
 
       def title
         "#{payload.body.plain.cut} (#{event.payload.issue.title})"
