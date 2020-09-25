@@ -18,8 +18,6 @@ module Furik
       end
 
       events_by_repo.each { |repo, events| block&.call(repo, events) }
-    rescue NameError => e
-      puts "Unknown event #{e}"
     end
 
     private
