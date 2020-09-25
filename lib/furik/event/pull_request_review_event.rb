@@ -2,7 +2,7 @@
 
 module Furik
   module Event
-    class PullRequestReviewComment < GithubEvent
+    class PullRequestReviewEvent < GithubEvent
       PAYLOAD_TYPE = :review
 
       def title

@@ -2,7 +2,7 @@
 
 module Furik
   module Event
-    class IssueComment < GithubEvent
+    class IssueCommentEvent < GithubEvent
       PAYLOAD_TYPE = :comment
 
       def title

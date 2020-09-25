@@ -2,7 +2,7 @@
 
 module Furik
   module Event
-    class Issue < GithubEvent
+    class IssueEvent < GithubEvent
       PAYLOAD_TYPE = :issue
 
       def type

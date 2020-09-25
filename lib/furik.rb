@@ -1,7 +1,15 @@
+# frozen_string_literal: true
+
 require 'octokit'
 require_relative 'furik/core_ext/string.rb'
 require_relative 'furik/events.rb'
 require_relative 'furik/version.rb'
+
+require_relative 'furik/event/github_event.rb'
+require_relative 'furik/event/issue_event.rb'
+require_relative 'furik/event/issue_comment_event.rb'
+require_relative 'furik/event/pull_request_review_event.rb'
+require_relative 'furik/event/pull_request_review_comment_event.rb'
 
 module Furik
   class << self
