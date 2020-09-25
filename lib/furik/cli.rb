@@ -16,24 +16,21 @@ module Furik
 
       diff = (to - from).to_i
       from -= since if diff.zero?
-      puts '## GitHub Activities'
-      puts ''
+      puts "## GitHub Activities"
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
-        puts "### #{repo}"
+        puts ''
+        puts "**#{repo}**"
         events.sort_by(&:type).each_with_object({ keys: [], recent_type: nil }) do |event, processed|
           next if processed[:keys].include?(event.key)
 
           processed[:keys] << event.key
           if event.type != processed[:recent_type]
-            puts ''
-            puts "#### #{event.type}"
-            puts ''
+            puts event.type
             processed[:recent_type] = event.type
           end
           puts event.summarize
         end
-        puts ''
       end
     end
   end
