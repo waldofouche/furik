@@ -20,16 +20,20 @@ module Furik
 
       Furik.events_with_grouping(from: from, to: to) do |repo, events|
         puts ''
-        puts "**#{repo}**"
-        events.sort_by(&:type).each_with_object({ keys: [], recent_type: nil }) do |event, processed|
+        puts "### #{repo}"
+
+        events.sort_by { |e| [e.owner.type, e.owner.number, e.occurred_at] }
+              .each_with_object({ keys: [], recent_type: nil, owner: nil }) do |event, processed|
           next if processed[:keys].include?(event.key)
 
           processed[:keys] << event.key
-          if event.type != processed[:recent_type]
+
+          if event.owner.html_url != processed[:owner]
             puts ''
-            puts event.type
-            processed[:recent_type] = event.type
+            puts "**[##{event.owner.number}](#{event.owner.html_url}) #{event.owner.title.strip}**"
+            processed[:owner] = event.owner.html_url
           end
+
           puts event.summarize
         end
       end
