@@ -11,7 +11,7 @@ class String
     gsub("\r\n", ' ').gsub(/[\s\-_=]{2,}/, ' ').strip
   end
 
-  def cut(size = 50, options = {})
+  def cut(size = 100, options = {})
     text = dup
     options[:omission] ||= '...'
     chars = ''
