@@ -7,6 +7,10 @@ module Furik
         :comment
       end
 
+      def summarize
+        "- [##{event.payload.pull_request.number}] #{title}"
+      end
+
       def title
         return payload.body.plain.cut unless event.payload.pull_request.respond_to?(:title)
 
