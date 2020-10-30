@@ -11,8 +11,8 @@ module Furik
         "#{event.payload.pull_request.title} (#{payload.state})"
       end
 
-      def summarize
-        "- [##{event.payload.pull_request.number}](#{payload.html_url}): #{title}"
+      def occurred_at
+        payload.submitted_at
       end
     end
   end

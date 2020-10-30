@@ -23,11 +23,15 @@ module Furik
       end
 
       def summarize
-        "- [##{payload.number}](#{payload.html_url}): #{title} "
+        "- [#{type}](#{payload.html_url}): #{title}"
       end
 
       def title
         payload.title.plain
+      end
+
+      def occurred_at
+        payload.created_at
       end
     end
   end
