@@ -7,8 +7,12 @@ module Furik
         :comment
       end
 
-      def summarize
-        "- [##{event.payload.issue.number}](#{payload.html_url}): #{payload.body.plain.cut}"
+      def owner
+        event.payload.issue
+      end
+
+      def title
+        payload.body.plain.cut
       end
     end
   end

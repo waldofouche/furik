@@ -7,8 +7,8 @@ module Furik
         :comment
       end
 
-      def summarize
-        "- [##{event.payload.pull_request.number}] #{title}"
+      def owner
+        event.payload.pull_request
       end
 
       def title

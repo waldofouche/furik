@@ -18,6 +18,10 @@ module Furik
         "#{type}-#{payload.html_url}"
       end
 
+      def owner
+        payload
+      end
+
       def summarize
         "- [##{payload.number}](#{payload.html_url}): #{title} "
       end
