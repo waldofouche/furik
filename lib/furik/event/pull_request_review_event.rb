@@ -7,6 +7,10 @@ module Furik
         :review
       end
 
+      def owner
+        event.payload.pull_request
+      end
+
       def title
         "#{event.payload.pull_request.title} (#{payload.state})"
       end
