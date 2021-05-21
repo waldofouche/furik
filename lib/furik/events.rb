@@ -13,8 +13,8 @@ module Furik
         next unless valid_event?(event, from, to)
 
         github_event = %W[Furik Event #{event.type}].inject(Object) { |o, c| o.const_get c }.new(event)
-        events[event.repo.name] ||= []
-        events[event.repo.name] << github_event
+        events[event.repo.name] ||= {}
+        (events[event.repo.name][github_event.owner_as_string] ||= []) << github_event.type
       end
 
       events_by_repo.each { |repo, events| block&.call(repo, events) }
@@ -23,7 +23,9 @@ module Furik
     private
 
     def valid_event?(event, from, to)
-      types.include?(event.type) && from <= event.created_at.localtime.to_date && event.created_at.localtime.to_date <= to
+      types.include?(event.type) &&
+        from <= event.created_at.localtime.to_date &&
+        event.created_at.localtime.to_date <= to
     end
 
     def types

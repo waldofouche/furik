@@ -6,37 +6,33 @@ This has been forked from https://github.com/pepabo/furik and is stripped down f
 
 ## Installation
 
-Install it yourself as:
+Build and install locally:
 
-    $ gem build furik.gemspec
-    $ gem install --local GENERATED_GEM
+```shell
+$ gem build furik.gemspec
+$ gem install --local GENERATED_GEM
+```
 
 ## Usage
 
-You can show GitHub activity while one day.
-
-    $ furik activity
-
-Output example is here:
-
-```
-% furik activity
-## GitHub Activities
-
-### ruby/rubyspec
-
-- [pull_request](https://github.com/ruby/rubyspec/pull/158): Set Net::FTP.default_passive to false.
-- [comment](https://github.com/ruby/rubyspec/pull/158#issuecomment-155703551): :+1: (Set Net::FTP.default_passive t...)
-
-### ruby/ruby
-
-- [pull_request](https://github.com/ruby/ruby/pull/1091): Fix typo, double 'means'
-(snip)
+You can show GitHub activity for one day:
+```shell
+$ furik activity
 ```
 
-furik supports to store authentication via NetRC.
+Or `n` days:
 
-Stored to `~/.netrc` by default.
+```sh
+$ furik activity -d 5
+```
+
+Or in a range:
+
+```shell
+$ furik activity -f 2021-01-01 -t 2021-01-07
+```
+
+Furik authenticates to Github via `netrc`, which is stored in `~/.netrc` by default.
 
 ```sh
 % cat ~/.netrc

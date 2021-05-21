@@ -10,10 +10,6 @@ module Furik
       def owner
         event.payload.issue
       end
-
-      def title
-        payload.body.plain.cut
-      end
     end
   end
 end
