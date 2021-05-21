@@ -11,27 +11,15 @@ module Furik
       end
 
       def type
-        payload_type.to_s.gsub('_', ' ').capitalize
-      end
-
-      def key
-        "#{type}-#{payload.html_url}"
+        payload_type.to_s.capitalize
       end
 
       def owner
         payload
       end
 
-      def summarize
-        "- [#{type}](#{payload.html_url}): #{title}"
-      end
-
-      def title
-        payload.title.plain
-      end
-
-      def occurred_at
-        payload.created_at
+      def owner_as_string
+        "**[##{owner.number}](#{owner.html_url}): #{owner.title.strip}**"
       end
     end
   end

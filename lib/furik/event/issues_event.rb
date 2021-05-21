@@ -8,17 +8,7 @@ module Furik
       end
 
       def type
-        "#{event.payload.action} #{payload_type}".capitalize
-      end
-
-      def summarize
-        "- #{type}"
-      end
-
-      def occurred_at
-        return payload.closed_at if event.payload.action == 'closed'
-
-        payload.created_at
+        event.payload.action.capitalize
       end
     end
   end
