@@ -32,6 +32,13 @@ Or in a range:
 $ furik activity -f 2021-01-01 -t 2021-01-07
 ```
 
+Output straight to the clipboard:
+
+```shell
+$ furik activity | xclip -sel clip  # linux
+$ furik activity | pbclip           # mac
+```
+
 Furik authenticates to Github via `netrc`, which is stored in `~/.netrc` by default.
 
 ```sh
