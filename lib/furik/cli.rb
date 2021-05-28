@@ -24,7 +24,7 @@ module Furik
 
         events.each do |title, types|
           puts ''
-          puts "#{title} (#{types.reverse.uniq.join(', ')})"
+          puts "- #{title} (#{types.reverse.uniq.join(', ')})"
         end
       end
     end
